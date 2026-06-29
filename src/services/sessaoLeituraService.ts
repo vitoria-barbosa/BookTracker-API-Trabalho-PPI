@@ -37,10 +37,19 @@ export class SessaoLeituraService {
     return res.rows[0] as SessaoLeitura;
   }
 
+  async buscarTodasAsSessoes(): Promise<SessaoLeitura[]> {
+    const res = await pool.query(
+      `SELECT id, id_livro as "idLivro", qtd_paginas as "qtdPaginas", comentario, data_sessao as "dataSessao"
+       FROM SESSAO_LEITURA ORDER BY data_sessao DESC`,
+    );
+
+    return res.rows as SessaoLeitura[];
+  }
+
   async buscarSessoesPeloLivro(idLivro: number): Promise<SessaoLeitura[]> {
     const res = await pool.query(
       `SELECT id, id_livro as "idLivro", qtd_paginas as "qtdPaginas", comentario, data_sessao as "dataSessao"
-       FROM SESSAO_LEITURA WHERE ID_LIVRO = $1`,
+       FROM SESSAO_LEITURA WHERE ID_LIVRO = $1 ORDER BY data_sessao DESC`,
       [idLivro],
     );
 
