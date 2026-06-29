@@ -21,6 +21,7 @@ router.get(
   sessaoLeituraController.buscarSessoesDeUmLivro,
 );
 
+router.get("/sessoes-de-leitura", sessaoLeituraController.buscarTodasAsSessoes);
 router.get("/sessoes-de-leitura/:id", sessaoLeituraController.buscarSessao);
 router.patch(
   "/sessoes-de-leitura/:id",

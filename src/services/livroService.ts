@@ -14,11 +14,22 @@ export class LivroService {
     return res.rows[0] as Livro;
   }
 
-  async buscarLivros(): Promise<Livro[]> {
+  async buscarLivros(titulo?: string): Promise<Livro[]> {
+    if (!titulo) {
+      const res = await pool.query(
+        `SELECT id, titulo, autor, genero, qtd_paginas as "qtdPaginas", 
+        comecou_em as "comecouEm", terminou_em as "terminouEm", nota, opiniao 
+        FROM LIVRO`,
+      );
+
+      return res.rows as Livro[];
+    }
+
     const res = await pool.query(
       `SELECT id, titulo, autor, genero, qtd_paginas as "qtdPaginas", 
       comecou_em as "comecouEm", terminou_em as "terminouEm", nota, opiniao 
-      FROM LIVRO`,
+      FROM LIVRO WHERE titulo ILIKE $1`,
+      [`%${titulo}%`],
     );
 
     return res.rows as Livro[];

@@ -23,13 +23,27 @@ export class SessaoLeituraController {
     }
   };
 
+  buscarTodasAsSessoes = async (req: Request, res: Response) => {
+    try {
+      const sessoesDeLeitura =
+        await this.sessaoLeituraService.buscarTodasAsSessoes();
+
+      return res.status(200).json(sessoesDeLeitura);
+    } catch (error: any) {
+      res.status(500).json({
+        erro:
+          "Erro ao buscar as sessões de leitura cadastradas. " + error.message,
+      });
+    }
+  };
+
   buscarSessoesDeUmLivro = async (req: Request, res: Response) => {
     try {
       const idLivro = Number(req.params.idLivro);
-      const sessaoDeLeitura =
+      const sessoes =
         await this.sessaoLeituraService.buscarSessoesPeloLivro(idLivro);
 
-      return res.status(200).json(sessaoDeLeitura);
+      return res.status(200).json(sessoes);
     } catch (error: any) {
       res.status(500).json({
         erro:

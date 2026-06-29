@@ -15,7 +15,8 @@ export class LivroController {
 
   buscarLivros = async (req: Request, res: Response) => {
     try {
-      const livros = await this.livroService.buscarLivros();
+      const titulo = req.query.titulo?.toString();
+      const livros = await this.livroService.buscarLivros(titulo);
 
       res.status(200).json(livros);
     } catch (error: any) {
