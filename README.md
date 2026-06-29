@@ -111,7 +111,17 @@ Resposta `201`:
 
 #### `GET /livros`
 
-Retorna todos os livros cadastrados.
+Retorna todos os livros cadastrados. É possível filtrar os resultados pelo título através do query param `titulo`.
+
+Query params:
+
+- `titulo` (opcional): filtra livros cujo título contenha o valor informado(case-insensitive).
+
+Exemplo:
+
+```bash
+GET /livros?titulo=senhor
+```
 
 Resposta `200`:
 
@@ -257,6 +267,32 @@ Retorna todas as sessões de leitura de um livro.
 Parâmetros de rota:
 
 - `idLivro`: ID do livro
+
+Observações:
+
+- As sessões são retornadas ordenadas da mais recente para a mais antiga, com base em `dataSessao`.
+
+Resposta `200`:
+
+```json
+[
+  {
+    "id": 1,
+    "idLivro": 1,
+    "qtdPaginas": 25,
+    "comentario": "Li o primeiro capítulo",
+    "dataSessao": "2026-06-27"
+  }
+]
+```
+
+#### `GET /sessoes-de-leitura`
+
+Retorna todas as sessões de leitura cadastradas no sistema.
+
+Observações:
+
+- As sessões são retornadas em ordem decrescente por `dataSessao`, exibindo primeiro as mais recentes.
 
 Resposta `200`:
 
